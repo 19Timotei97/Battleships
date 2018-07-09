@@ -1,0 +1,56 @@
+# Used for random position of ships
+from random import randint
+
+board = []
+
+# Create a table of 5 x 5 of "O"
+for x in range(5):
+  board.append(["O"] * 5)
+
+# Print them in an nice way
+def print_board(board):
+  for row in board:
+    print " ".join(row)
+
+print_board(board)
+
+# For a random location of a ship
+def random_row(board):
+  return randint(0, len(board) - 1)
+
+def random_col(board):
+  return randint(0, len(board[0]) - 1)
+
+ship_row = random_row(board)
+ship_col = random_col(board)
+hit = False
+
+# Check what happens next
+for turn in range(4):
+  # Get the guess from the player
+  guess_row = int(raw_input("Guess Row: "))
+  guess_col = int(raw_input("Guess Col: "))
+  
+  if guess_row == ship_row and guess_col == ship_col:
+    print "Congratulations! You sunk my battleship!"
+    hit = True
+    if(hit == True):
+    	  print("You have won the game!")
+    break
+  	# If the numbers are exactly like the random ones,
+  	#	the ship is destroyed
+  elif guess_row not in range(5) or guess_row not in range(5):
+        print "Oops, that's not even in the ocean."
+    	# Protects against going over the range of 5 by 5
+  elif(board[guess_row][guess_col] == "X"):
+        print "You guessed that one already."
+    	# Don't guess twice the same place
+  else:
+        print "You missed my battleship!"
+        board[guess_row][guess_col] = "X"
+        	# Print (turn + 1) here!
+        if(turn == 3):
+          	print "Game Over"
+        else:
+          	print "Turn", turn + 1
+          	print_board(board)
